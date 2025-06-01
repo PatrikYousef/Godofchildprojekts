@@ -2,138 +2,138 @@
 #include <vector>
 #include <algorithm>
 #include <iomanip>
-#include <cstdlib> // För system()
+#include <cstdlib> // For system()
 
 using namespace std;
 
-// Anpassa kommandot för att rensa skärmen beroende på OS
+// Adjust the command to clear the screen depending on OS
 #ifdef _WIN32
     #define CLEAR_COMMAND "cls"
 #else
     #define CLEAR_COMMAND "clear"
 #endif
 
-void rensaSkärm() {
+void clearScreen() {
     system(CLEAR_COMMAND);
 }
 
-void paus() {
-    cout << "\nTryck på Enter för att fortsätta...";
+void pause() {
+    cout << "\nPress Enter to continue...";
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
     cin.get();
 }
 
-// Datatyp för att spara betygsinformation
-struct Betyg {
-    string namn;
-    string efternamn;
-    char betyg;
+// Data type to store grade information
+struct Grade {
+    string firstName;
+    string lastName;
+    char grade;
 
-    // Jämförelseoperator för att kunna använda std::remove
-    bool operator==(const Betyg& other) const {
-        return namn == other.namn && efternamn == other.efternamn && betyg == other.betyg;
+    // Comparison operator to be able to use std::remove
+    bool operator==(const Grade& other) const {
+        return firstName == other.firstName && lastName == other.lastName && grade == other.grade;
     }
 };
 
-// Lägg till betyg
-void läggTill(vector<Betyg>& system) {
-    Betyg b;
-    cout << "\n--- Lägg till betyg ---\n";
-    cout << "Förnamn: ";
-    cin >> b.namn;
-    cout << "Efternamn: ";
-    cin >> b.efternamn;
-    cout << "Betyg (A-F): ";
-    cin >> b.betyg;
-    b.betyg = toupper(b.betyg);
+// Add a grade
+void addGrade(vector<Grade>& system) {
+    Grade g;
+    cout << "\n--- Add Grade ---\n";
+    cout << "First name: ";
+    cin >> g.firstName;
+    cout << "Last name: ";
+    cin >> g.lastName;
+    cout << "Grade (A-F): ";
+    cin >> g.grade;
+    g.grade = toupper(g.grade);
 
-    if (string("ABCDEF").find(b.betyg) != string::npos) {
-        system.push_back(b);
-        cout << "\n✅ Tillagt: " << b.namn << " " << b.efternamn << " (" << b.betyg << ")\n";
+    if (string("ABCDEF").find(g.grade) != string::npos) {
+        system.push_back(g);
+        cout << "\n✅ Added: " << g.firstName << " " << g.lastName << " (" << g.grade << ")\n";
     } else {
-        cout << "\n❌ Ogiltigt betyg. Endast A-F tillåtet.\n";
+        cout << "\n❌ Invalid grade. Only A-F allowed.\n";
     }
 }
 
-// Ta bort ett specifikt betyg
-void taBort(vector<Betyg>& system) {
-    Betyg b;
-    cout << "\n--- Ta bort betyg ---\n";
-    cout << "Förnamn: ";
-    cin >> b.namn;
-    cout << "Efternamn: ";
-    cin >> b.efternamn;
-    cout << "Betyg: ";
-    cin >> b.betyg;
-    b.betyg = toupper(b.betyg);
+// Remove a specific grade
+void removeGrade(vector<Grade>& system) {
+    Grade g;
+    cout << "\n--- Remove Grade ---\n";
+    cout << "First name: ";
+    cin >> g.firstName;
+    cout << "Last name: ";
+    cin >> g.lastName;
+    cout << "Grade: ";
+    cin >> g.grade;
+    g.grade = toupper(g.grade);
 
-    auto it = remove(system.begin(), system.end(), b);
+    auto it = remove(system.begin(), system.end(), g);
     if (it != system.end()) {
         system.erase(it, system.end());
-        cout << "\n🗑️  Post raderad.\n";
+        cout << "\n🗑️  Entry deleted.\n";
     } else {
-        cout << "\n⚠️  Ingen matchande post hittades.\n";
+        cout << "\n⚠️  No matching entry found.\n";
     }
 }
 
-// Visa alla betyg
-void visa(const vector<Betyg>& system) {
-    cout << "\n--- Betygslista ---\n";
+// Show all grades
+void showGrades(const vector<Grade>& system) {
+    cout << "\n--- Grade List ---\n";
     if (system.empty()) {
-        cout << "📭 Inga betyg tillagda ännu.\n";
+        cout << "📭 No grades added yet.\n";
         return;
     }
 
-    cout << left << setw(20) << "Förnamn" 
-         << setw(20) << "Efternamn" 
-         << "Betyg\n";
+    cout << left << setw(20) << "First Name" 
+         << setw(20) << "Last Name" 
+         << "Grade\n";
     cout << string(50, '-') << '\n';
 
-    for (const auto& b : system) {
-        cout << left << setw(20) << b.namn
-             << setw(20) << b.efternamn
-             << b.betyg << '\n';
+    for (const auto& g : system) {
+        cout << left << setw(20) << g.firstName
+             << setw(20) << g.lastName
+             << g.grade << '\n';
     }
 }
 
-// Visa huvudmenyn och returnera användarens val
-int meny() {
-    cout << "======= BETYGSSYSTEM =======\n";
-    cout << "1. Lägg till betyg\n"
-         << "2. Ta bort betyg\n"
-         << "3. Visa betyg\n"
-         << "4. Avsluta\n"
+// Show main menu and return user choice
+int menu() {
+    cout << "======= GRADE SYSTEM =======\n";
+    cout << "1. Add grade\n"
+         << "2. Remove grade\n"
+         << "3. Show grades\n"
+         << "4. Exit\n"
          << "============================\n"
-         << "Val: ";
+         << "Choice: ";
 
-    int val;
-    if (!(cin >> val)) {
+    int choice;
+    if (!(cin >> choice)) {
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        return -1; // Felaktig inmatning
+        return -1; // Invalid input
     }
 
-    cin.ignore(); // För att rensa efter siffran
-    return val;
+    cin.ignore(); // Clear newline after number
+    return choice;
 }
 
 int main() {
-    vector<Betyg> system;
+    vector<Grade> system;
     while (true) {
-        rensaSkärm();
-        int val = meny();
+        clearScreen();
+        int choice = menu();
 
-        switch (val) {
-            case 1: läggTill(system); break;
-            case 2: taBort(system); break;
-            case 3: visa(system); break;
+        switch (choice) {
+            case 1: addGrade(system); break;
+            case 2: removeGrade(system); break;
+            case 3: showGrades(system); break;
             case 4:
-                cout << "\n👋 Tack för att du använde systemet. Hejdå!\n";
+                cout << "\n👋 Thank you for using the system. Goodbye!\n";
                 return 0;
             default:
-                cout << "\n⚠️  Ogiltigt val. Ange en siffra mellan 1 och 4.\n";
+                cout << "\n⚠️  Invalid choice. Please enter a number between 1 and 4.\n";
         }
 
-        paus();
+        pause();
     }
 }
