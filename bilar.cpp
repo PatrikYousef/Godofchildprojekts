@@ -5,7 +5,7 @@
 
 using namespace std;
 
-void rensaSkärm() {
+void clearScreen() {
 #ifdef _WIN32
     system("cls");
 #else
@@ -13,106 +13,104 @@ void rensaSkärm() {
 #endif
 }
 
+void addCar(vector<pair<string, int>>& cars) {
+    clearScreen();
+    string inputCar;
+    cout << "\n--- Add a Car ---\n";
+    cout << "Enter the car name: ";
+    cin >> inputCar;
 
-void bilarna(vector<pair<string, int>>& bilar) {
-    rensaSkärm();
-    string dinval;
-    cout << "\n--- Lägg till en bil ---\n";
-    cout << "Vad vill du lägga till: ";
-    cin >> dinval;
+    int price;
+    cout << "Enter the price of the car: ";
+    cin >> price;
 
-    int prisen;
-    cout << "Vad är priset på varan: ";
-    cin >> prisen;
-
-    
     // Add the car and its price as a pair
-    bilar.push_back(make_pair(dinval, prisen));
+    cars.push_back(make_pair(inputCar, price));
 
-    cout << "\nBilen och priset har lagts till:\n";
-    cout << "Bil: " << dinval << ", Pris: " << prisen << " SEK\n";
+    cout << "\nCar and price have been added:\n";
+    cout << "Car: " << inputCar << ", Price: " << price << " USD\n";
     cout << "--------------------------------------\n";
 }
 
-void visa(const vector<pair<string, int>>& bilar) {
-    rensaSkärm();
+void showCars(const vector<pair<string, int>>& cars) {
+    clearScreen();
     
-    if (bilar.empty()) {
-        cout << "\nBil-listan är tom.\n";
+    if (cars.empty()) {
+        cout << "\nThe car list is empty.\n";
         return;
     }
 
-    cout << "\n--- Alla bilar och deras priser ---\n\n";
+    cout << "\n--- All Cars and Their Prices ---\n\n";
 
-    // Tabellrubriker
-    cout << left << setw(25) << "Bil" << setw(15) << "Pris (SEK)" << endl;
+    // Table headers
+    cout << left << setw(25) << "Car" << setw(15) << "Price (USD)" << endl;
     cout << setfill('-') << setw(40) << "" << setfill(' ') << endl;
 
-    // Rader med data
-    for (const auto& bil : bilar) {
-        cout << left << setw(25) << bil.first 
-             << setw(15) << bil.second << endl;
+    // Data rows
+    for (const auto& car : cars) {
+        cout << left << setw(25) << car.first 
+             << setw(15) << car.second << endl;
     }
 
     cout << setfill('-') << setw(40) << "" << setfill(' ') << endl;
 }
 
-// Funktion för att radera en bil och dess motsvarande pris
-void radera(vector<pair<string, int>>& bilar) {
-    rensaSkärm();
-    if (bilar.empty()) {
-        cout << "\nDet finns inga bilar att radera.\n";
+// Function to delete a car and its corresponding price
+void deleteCar(vector<pair<string, int>>& cars) {
+    clearScreen();
+    if (cars.empty()) {
+        cout << "\nThere are no cars to delete.\n";
         return;
     }
 
-    visa(bilar);
+    showCars(cars);
 
-    cout << "\n--- Radera en bil ---\n";
-    cout << "Vilken bil vill du radera? (Skriv namnet): ";
-    string namn;
-    cin.ignore();  // Ignorera eventuell newline från tidigare input
-    getline(cin, namn);
+    cout << "\n--- Delete a Car ---\n";
+    cout << "Which car do you want to delete? (Type the name): ";
+    string name;
+    cin.ignore();  // Ignore leftover newline from previous input
+    getline(cin, name);
 
-    for (size_t i = 0; i < bilar.size(); ++i) {
-        if (bilar[i].first == namn) {
-            bilar.erase(bilar.begin() + i);
-            cout << "Bilen '" << namn << "' har raderats.\n";
+    for (size_t i = 0; i < cars.size(); ++i) {
+        if (cars[i].first == name) {
+            cars.erase(cars.begin() + i);
+            cout << "Car '" << name << "' has been deleted.\n";
             cout << "--------------------------------------\n";
             return;
         }
     }
-    cout << "Bilen '" << namn << "' hittades inte.\n";
+    cout << "Car '" << name << "' was not found.\n";
     cout << "-----------------------------------------------";
 }
 
 int main() {
-    vector<pair<string, int>> bilar;
-    int val;
+    vector<pair<string, int>> cars;
+    int choice;
 
     while (true) {
-        cout << "\n--- Välj ett alternativ ---\n";
-        cout << "1. Visa alla bilar\n";
-        cout << "2. Lägg till bil\n";
-        cout << "3. Radera bil\n";
-        cout << "4. Avsluta programmet\n";
-        cout << "Ditt val (1-4): ";
-        cin >> val;
+        cout << "\n--- Choose an option ---\n";
+        cout << "1. Show all cars\n";
+        cout << "2. Add a car\n";
+        cout << "3. Delete a car\n";
+        cout << "4. Exit program\n";
+        cout << "Your choice (1-4): ";
+        cin >> choice;
 
-        switch (val) {
+        switch (choice) {
             case 1:
-                visa(bilar);
+                showCars(cars);
                 break;
             case 2:
-                bilarna(bilar);
+                addCar(cars);
                 break;
             case 3:
-                radera(bilar);
+                deleteCar(cars);
                 break;
             case 4:
-                cout << "\nProgrammet avslutas...\n";
+                cout << "\nExiting program...\n";
                 return 0;
             default:
-                cout << "\nOgiltigt val. Försök igen.\n";
+                cout << "\nInvalid choice. Please try again.\n";
                 break;
         }
     }
