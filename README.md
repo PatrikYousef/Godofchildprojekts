@@ -56,7 +56,7 @@ You can logout from the main menu or exit from the login menu.
 
 The file name SavingMoney.cpp
 
-💸 Personal Finance Manager (C++)
+### 💸 Personal Finance Manager (C++)
 A console-based application for managing users' financial data. Add users, view their income and expenses, calculate their savings, and remove them — all from a simple, text-driven menu interface.
 
 📋 Features
