@@ -1,0 +1,13 @@
+/Users/patrikyousef/List/build/Qt_6_9_1_for_macOS-Debug/CMakeFiles/List.dir
+/Users/patrikyousef/List/build/Qt_6_9_1_for_macOS-Debug/CMakeFiles/List_lupdate.dir
+/Users/patrikyousef/List/build/Qt_6_9_1_for_macOS-Debug/CMakeFiles/update_translations.dir
+/Users/patrikyousef/List/build/Qt_6_9_1_for_macOS-Debug/CMakeFiles/List_lrelease.dir
+/Users/patrikyousef/List/build/Qt_6_9_1_for_macOS-Debug/CMakeFiles/release_translations.dir
+/Users/patrikyousef/List/build/Qt_6_9_1_for_macOS-Debug/CMakeFiles/edit_cache.dir
+/Users/patrikyousef/List/build/Qt_6_9_1_for_macOS-Debug/CMakeFiles/rebuild_cache.dir
+/Users/patrikyousef/List/build/Qt_6_9_1_for_macOS-Debug/CMakeFiles/list_install_components.dir
+/Users/patrikyousef/List/build/Qt_6_9_1_for_macOS-Debug/CMakeFiles/install.dir
+/Users/patrikyousef/List/build/Qt_6_9_1_for_macOS-Debug/CMakeFiles/install/local.dir
+/Users/patrikyousef/List/build/Qt_6_9_1_for_macOS-Debug/CMakeFiles/install/strip.dir
+/Users/patrikyousef/List/build/Qt_6_9_1_for_macOS-Debug/CMakeFiles/List_autogen_timestamp_deps.dir
+/Users/patrikyousef/List/build/Qt_6_9_1_for_macOS-Debug/CMakeFiles/List_autogen.dir
