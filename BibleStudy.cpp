@@ -6,6 +6,15 @@
 
 using namespace std;
 
+#ifdef _WIN32
+#include <windows.h>
+#include <mmsystem.h>
+#pragma comment(lib, "winmm.lib")
+#else
+#include <unistd.h>
+#endif
+
+
 void clearScreen() {
 #ifdef _WIN32
     system("cls");
@@ -24,7 +33,6 @@ void waitForEnter() {
     cin.get();
 }
 
-
 void addSin(vector<string>& sins) {
     cout << "Please enter a sin you'd like to write down: ";
     string sin;
@@ -37,9 +45,7 @@ void addSin(vector<string>& sins) {
 
     else{
          sins.push_back(sin);
-
     }
-    
 }
 
 void showSins(const vector<string>& sins) {
@@ -235,7 +241,6 @@ void godsayingyes() {
     cout << "🌟==============================================🌟\n\n";
     waitForEnter();
 
-    // Fruit of the Spirit
     string fruits[] = {
         "love", "joy", "peace", "patience", "kindness",
         "goodness", "faithfulness", "gentleness", "self-control"
@@ -285,7 +290,6 @@ void godsayingyes() {
         waitForEnter();
     }
 
-    // Signs God is saying YES
     vector<string> signs = {
         "✅ Doors open naturally — with peace, not pressure.",
         "✅ You feel inner confirmation through Scripture or prayer.",
@@ -362,9 +366,6 @@ void godsayingno() {
     }
     waitForEnter();
 }
-
-
-
 
 void wisdom() {
     cout << "\n📘==============================================📘\n";
@@ -497,7 +498,13 @@ void gospels() {
     }
 }
 
-
+void playSound() {
+#ifdef _WIN32
+    system("afplay SongforBiblestudyfile.MP4 &");
+#else
+    system("afplay SongforBiblestudyfile.MP4 &");
+#endif
+}
 
 
 void showMenu() {
@@ -506,7 +513,7 @@ void showMenu() {
     cout << "══════════════════════════════════════════════════════════════\n";
     visaSlumpadVers();
     cout << "══════════════════════════════════════════════════════════════\n";
-    cout << " 🌟 What would you like to do today?                          \n";
+    cout << "              🌟 What would you like to do today?                          \n";
     cout << "══════════════════════════════════════════════════════════════\n";
     cout << "\n1. ✍️  Write down a sin\n\n";
     cout << "2. 📜 Show the sins you've written\n\n";
@@ -517,10 +524,10 @@ void showMenu() {
     cout << "7. 🚫 Signs God is saying NO to our prayers\n\n";
     cout << "8. 📖 Bible verses about WISDOM\n\n";
     cout << "9. 🔮 Bible verses about PROPHECY\n\n";
-    cout << "10. 🎵 Bible verses about PRAISE\n\n";
-    cout << "11. 📘 Bible verses about COMMANDMENTS\n\n";
-    cout << "12. 📕 Bible verses about the GOSPELS\n\n";
-    cout << "13. 🚪 Exit the Bible Study\n\n";
+    cout << "10.🎵 Bible verses about PRAISE\n\n";
+    cout << "11.📘 Bible verses about COMMANDMENTS\n\n";
+    cout << "12.📕 Bible verses about the GOSPELS\n\n";
+    cout << "13.🚪 Exit the Bible Study\n\n"; 
     cout << "══════════════════════════════════════════════════════════════\n";
 }
 
@@ -529,12 +536,10 @@ int main() {
     vector<string> goodthings;
 
     int choice;
-
+    playSound();
     do {
         clearScreen();
         showMenu();
-
-        // ✅ Input validation
         string input;
         bool validInput = false;
         do {
@@ -595,22 +600,18 @@ int main() {
                 showSins(sins);
                 cout << "\n💖 Your Good Deeds:\n";
                 showgoodthing(goodthings);
-                 
-                 
                 break;
             case 5:
                 cout << "║ 📝  View Good Deeds List                            ║\n";
                 cout << "╚══════════════════════════════════════════════════════╝\n\n";
                 clearScreen();
                 showgoodthing(goodthings);
-                  
                 break;
             case 6:
                 cout << "║ ✅  God Says: YES                                    ║\n";
                 cout << "╚══════════════════════════════════════════════════════╝\n\n";
                   clearScreen();
                 godsayingyes();
-                 
                 break;
             case 7:
                 cout << "║ ❌  God Says: NO                                     ║\n";
@@ -651,7 +652,6 @@ int main() {
             case 13:
                 cout << "║ 🙌  Thank You for Using the Program                  ║\n";
                 cout << "╚══════════════════════════════════════════════════════╝\n";
-                
                 clearScreen();
                 cout << "\n📖 May God bless you abundantly!\n";
                 cout << "🙏 May God's peace and wisdom be with you always.\n\n";
