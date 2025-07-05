@@ -19,6 +19,7 @@
 - 💡 Get inspirational goal ideas to stay motivated  
 - 🎵 Optional sound effects when the app launches  
 - 🖥️ Cross-platform support: Windows, macOS, and Linux  
+- 🎶 A custom theme song is coming tomorrow!  
 - 🤝 Friendly to contributions and open source collaboration  
 
 ---
@@ -34,6 +35,7 @@ If you found this project useful, fun, or inspiring — or if you're curious abo
 > Let's build fun and helpful tools together! 😊
 
 ---
+
 
 
 
