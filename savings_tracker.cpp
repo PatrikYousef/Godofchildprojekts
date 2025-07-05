@@ -223,9 +223,9 @@ void enterMoneyToCheckBalance(const vector<SavingGoal>& goalsList) {
 // Optional: Play a sound (macOS only by default)
 void playSound() {
 #ifdef _WIN32
-    PlaySound(TEXT("sound.wav"), NULL, SND_FILENAME | SND_ASYNC);
+    PlaySound(TEXT("songforsaving_tracker.MP4"), NULL, SND_FILENAME | SND_ASYNC);
 #else
-    system("afplay avicii.MP4 &");
+    system("afplay songforsaving_tracker.MP4 &");
 #endif
 }
 
@@ -293,3 +293,4 @@ int main() {
 
     return 0;
 }
+
