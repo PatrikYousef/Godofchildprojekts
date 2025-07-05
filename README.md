@@ -1,33 +1,28 @@
-# 🔐 Name Encryption Tool
+# 💰 Personal Savings Tracker
+savings_feature.cpp file
+**A C++ Console App to Set Goals, Track Progress, and Stay Financially Motivated**
 
-🤝 Contribute & Star
-## 🙌 Support & Contributions
+---
 
-If you found this project useful or interesting or other projects that i have been doing please:
+## 🌟 What is this?
 
-- ⭐ **Star** the repository to show your support 
-- 👤 **Follow** me on GitHub for more creative C++ tools  
-- 🛠️ **Fork & contribute** — new features, ideas, or even small improvements are always welcome!
+**Personal Savings Tracker** is a beginner-friendly C++ console application that helps you manage your savings goals with ease. Whether you're saving for a vacation, a new gadget, or a future investment, this app keeps everything organized — and fun!
 
-A fun and beginner-friendly C++ console app that encrypts names into symbols — and decrypts them back.
+---
 
-## ✨ Features
-- 🔏 Encrypt names using a custom symbol map
-- 🔓 Decrypt back to readable text
-- 💻 Works on Windows, macOS, and Linux
-- 🚫 Handles invalid input safely
-- 🎀 Emoji-enhanced menu and output 
-## 🚀 Quick Start
+## 🧠 Features
 
-## Here is a Demo how it works
-<img width="1470" alt="Skärmavbild 2025-07-02 kl  21 59 48" src="https://github.com/user-attachments/assets/9ec4d732-311d-48b0-a61a-ef390bcf5ba6" />
-<img width="1470" alt="Skärmavbild 2025-07-02 kl  21 53 42" src="https://github.com/user-attachments/assets/b67538fe-be0e-4165-ab2c-c659d0b4c3e5" />
+- ➕ Add personalized savings goals
+- 📊 Calculate and display monthly savings needed
+- 🔍 Track progress toward each goal
+- 🧾 Enter current savings and get a full summary
+- 💡 Get goal ideas to stay inspired
+- 🎵 Optional sound when the app starts
+- 🖥️ Cross-platform support (Windows, macOS, Linux)
 
-# 📚 Ideal For
+---
 
-C++ learners and hobbyists
-Fun CLI projects
-Practicing vectors, strings, and I/O
+
 
 🤝 Contribute & Star
 ## 🙌 Support & Contributions
