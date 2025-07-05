@@ -8,11 +8,11 @@
 #include <exception>
 #include <cstdlib>
 #include <limits>
-#include <iostream>
 #include <fstream>
 
 using namespace std;
 
+// ===== UTILITY =====
 void clearScreen() {
 #ifdef _WIN32
     system("cls");
@@ -20,23 +20,6 @@ void clearScreen() {
     system("clear");
 #endif
 }
-
-struct BankAccount {
-    string bankName;
-    string firstName;
-    string lastName;
-    string accountNumber;
-    string CVV;
-    string expiryDate;
-    int balance = 0;
-};
-
-struct User {
-    string firstName;
-    string lastName;
-    string username;
-    string password;
-};
 
 void safeInputInt(int& value, const string& prompt, int min = numeric_limits<int>::min(), int max = numeric_limits<int>::max()) {
     while (true) {
@@ -56,8 +39,27 @@ void safeInputInt(int& value, const string& prompt, int min = numeric_limits<int
     }
 }
 
+// ===== STRUCTS =====
+struct BankAccount {
+    string bankName;
+    string firstName;
+    string lastName;
+    string accountNumber;
+    string CVV;
+    string expiryDate;
+    int balance = 0;
+};
+
+struct User {
+    string firstName;
+    string lastName;
+    string username;
+    string password;
+};
+
+// ===== FILE STORAGE =====
 void saveUsersToFile(const vector<User>& users, const string& filename = "sparaddata") {
-    ofstream MyFile(filename, ios::trunc); // overwrite entire file
+    ofstream MyFile(filename, ios::trunc);
     if (!MyFile) {
         cerr << "Error opening file for writing!" << endl;
         return;
@@ -72,14 +74,13 @@ void saveUsersToFile(const vector<User>& users, const string& filename = "sparad
     MyFile.close();
 }
 
+// ===== USER MANAGEMENT =====
 void manageUsers(vector<User>& users) {
     User u;
     while (true) {
         clearScreen();
         int choice;
         safeInputInt(choice, "\n1. Create Account\n2. Login\n3. Delete Account\n4. Back\nWhat would you like to do? (1-4): ", 1, 4);
-
-        
 
         try {
             switch (choice) {
@@ -110,7 +111,7 @@ void manageUsers(vector<User>& users) {
                     break;
                 }
                 case 2:
-                    return; // Login - return to main program
+                    return;
                 case 3: {
                     clearScreen();
                     string usernameInput;
@@ -131,9 +132,6 @@ void manageUsers(vector<User>& users) {
                 }
                 case 4:
                     return;
-                default:
-                    cout << "Invalid choice. Please try again." << endl;
-                    break;
             }
         } catch (const exception& e) {
             clearScreen();
@@ -167,23 +165,19 @@ bool login(const vector<User>& users, string& loggedInUser) {
     return false;
 }
 
+// ===== BANK FUNCTIONS =====
 void ageCheck() {
     while (true) {
         int age;
         safeInputInt(age, "How old are you? ");
 
-        try {
-            if (age < 18) {
-                clearScreen();
-                cout << "You must be 18 years or older to create an account." << endl;
-            } else {
-                clearScreen();
-                cout << "You are eligible to create a bank account." << endl;
-                break;
-            }
-        } catch (const exception& e) {
+        if (age < 18) {
             clearScreen();
-            cout << "An error occurred: " << e.what() << endl;
+            cout << "You must be 18 years or older to create an account." << endl;
+        } else {
+            clearScreen();
+            cout << "You are eligible to create a bank account." << endl;
+            break;
         }
     }
 }
@@ -195,24 +189,18 @@ void addAccount(vector<BankAccount>& accounts) {
         BankAccount account;
         cout << "Bank name: ";
         getline(cin, account.bankName);
-
         cout << "First name: ";
         getline(cin, account.firstName);
-
         cout << "Last name: ";
         getline(cin, account.lastName);
-
         cout << "Account number: ";
         getline(cin, account.accountNumber);
-
         cout << "CVV: ";
         getline(cin, account.CVV);
-
         cout << "Expiry date (MMYY): ";
         getline(cin, account.expiryDate);
 
         accounts.push_back(account);
-
     } catch (const exception& e) {
         clearScreen();
         cout << "An error occurred: " << e.what() << endl;
@@ -249,6 +237,7 @@ void deleteAccount(vector<BankAccount>& accounts) {
 
     auto it = remove_if(accounts.begin(), accounts.end(),
                         [&toDelete](const BankAccount& account) { return account.firstName == toDelete; });
+
     if (it != accounts.end()) {
         accounts.erase(it, accounts.end());
         clearScreen();
@@ -264,67 +253,39 @@ void manageFunds(vector<BankAccount>& accounts) {
     cout << "===============================" << endl;
     cout << "       Welcome to the Bank     " << endl;
     cout << "===============================" << endl;
-    cout << "What would you like to do?" << endl;
     cout << "1. Deposit money" << endl;
     cout << "2. Withdraw money" << endl;
 
     int choice;
     safeInputInt(choice, "Enter your choice (1 or 2): ", 1, 2);
 
-    switch (choice) {
-        case 1: {
-            string name;
-            cout << "Which person do you want to deposit money for? ";
-            getline(cin, name);
+    string name;
+    cout << "Enter the first name for the account: ";
+    getline(cin, name);
 
-            for (auto& account : accounts) {
-                if (account.firstName == name) {
-                    int amount;
-                    safeInputInt(amount, "How much money would you like to deposit? ");
-                    if (amount > 0) {
-                        account.balance += amount;
-                        cout << account.firstName << "'s balance: $" << account.balance << " | Deposited: $" << amount << endl;
-                    } else {
-                        cout << "Error: Amount must be positive." << endl;
-                    }
-                    return;
-                }
-            }
-            cout << "No account found with that name." << endl;
-            break;
-        }
-        case 2: {
-            string name;
-            cout << "Which person do you want to withdraw money from? ";
-            getline(cin, name);
+    for (auto& account : accounts) {
+        if (account.firstName == name) {
+            int amount;
+            safeInputInt(amount, (choice == 1 ? "Deposit amount: " : "Withdraw amount: "));
 
-            for (auto& account : accounts) {
-                if (account.firstName == name) {
-                    int amount;
-                    safeInputInt(amount, "How much money would you like to withdraw? ");
-                    if (amount <= account.balance && amount > 0) {
-                        account.balance -= amount;
-                        cout << account.firstName << "'s balance: $" << account.balance << " | Withdrawn: $" << amount << endl;
-                    } else {
-                        cout << "Error: Insufficient funds or invalid amount." << endl;
-                    }
-                    return;
-                }
+            if (choice == 1 && amount > 0) {
+                account.balance += amount;
+                cout << name << "'s new balance: $" << account.balance << " (Deposited $" << amount << ")" << endl;
+            } else if (choice == 2 && amount > 0 && amount <= account.balance) {
+                account.balance -= amount;
+                cout << name << "'s new balance: $" << account.balance << " (Withdrew $" << amount << ")" << endl;
+            } else {
+                cout << "Invalid amount or insufficient funds." << endl;
             }
-            cout << "No account found with that name." << endl;
-            break;
+            return;
         }
-        default:
-            cout << "Invalid choice." << endl;
-            break;
     }
+
+    cout << "No account found with the name '" << name << "'." << endl;
 }
 
-int main() {
-    vector<BankAccount> accounts;
-    vector<User> users;
-    string loggedInUser;
-
+// ===== MENUS =====
+void showStartupMenu(vector<User>& users, string& loggedInUser) {
     while (true) {
         clearScreen();
         int choice;
@@ -333,26 +294,19 @@ int main() {
         if (choice == 1) {
             manageUsers(users);
         } else if (choice == 2) {
-            if (login(users, loggedInUser))
-                break;
-            else {
-                cout << "\nPress Enter to continue...";
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                cin.get();
-            }
+            if (login(users, loggedInUser)) return;
         } else if (choice == 3) {
             cout << "Exiting program..." << endl;
-            return 0;
-        } else {
-            cout << "Invalid choice." << endl;
+            exit(0);
         }
 
         cout << "\nPress Enter to continue...";
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cin.get();
     }
+}
 
-    // Main menu after login
+void showBankingMenu(vector<BankAccount>& accounts, vector<User>& users) {
     while (true) {
         clearScreen();
         cout << "\nSelect an option:" << endl;
@@ -381,17 +335,27 @@ int main() {
                 break;
             case 5:
                 cout << "Exiting program." << endl;
-                return 0;
+                exit(0);
             case 6:
-                main();  // Recursive call to restart login flow; not ideal for bigger projects but okay here
-                return 0;
-            default:
-                cout << "Invalid choice." << endl;
-                break;
+                return;
         }
 
         cout << "\nPress Enter to continue...";
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         cin.get();
     }
+}
+
+// ===== MAIN =====
+int main() {
+    vector<BankAccount> accounts;
+    vector<User> users;
+    string loggedInUser;
+
+    while (true) {
+        showStartupMenu(users, loggedInUser);
+        showBankingMenu(accounts, users);
+    }
+
+    return 0;
 }
